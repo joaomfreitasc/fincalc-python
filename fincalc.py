@@ -25,16 +25,6 @@ def calcular_juros_compostos(capital: float, taxa_anual: float, anos: int) -> fl
     return montante
 
 
-if __name__ == "__main__":
-    print("Iniciando o sistema FinCalc...")
-    montante = calcular_juros_simples(1000.0, 5.0, 2)
-    print(f"Juros Simples (R$ 1.000 a 5% por 2 anos): R$ {montante:.2f}")
-    montante_comp = calcular_juros_compostos(1000.0, 5.0, 2)
-    print(f"Juros Compostos: R$ {montante_comp:.2f}")
-    patrimonio = calcular_aposentadoria(10000.0, 500.0, 20, 6.0)
-    print(f"Patrimônio Estimado para Aposentadoria: R$ {patrimonio:.2f}")
-
-
 def calcular_depreciacao_linear(
     valor_inicial: float, valor_residual: float, vida_util_anos: int
 ) -> float:
@@ -45,7 +35,14 @@ def calcular_depreciacao_linear(
 
 
 def main():
+    """Função principal que executa exemplos de cálculos financeiros."""
     print("Iniciando o sistema FinCalc...")
+    montante = calcular_juros_simples(1000.0, 5.0, 2)
+    print(f"Juros Simples (R$ 1.000 a 5% por 2 anos): R$ {montante:.2f}")
+    montante_comp = calcular_juros_compostos(1000.0, 5.0, 2)
+    print(f"Juros Compostos: R$ {montante_comp:.2f}")
+    patrimonio = calcular_aposentadoria(10000.0, 500.0, 20, 6.0)
+    print(f"Patrimônio Estimado para Aposentadoria: R$ {patrimonio:.2f}")
     depreciacao = calcular_depreciacao_linear(10000.0, 2000.0, 5)
     print(f"Depreciação Anual: R$ {depreciacao:.2f}")
 
