@@ -1,5 +1,9 @@
 # FinCalc - Sistema de Cálculos Financeiros em Python
 
+from src.fincalc5 import calcular_depreciacao_linear
+from src.fincalc6 import converter_taxa_anual_para_mensal
+from src.fincalc7 import calcular_margem_liquida
+
 
 def calcular_juros_simples(capital: float, taxa_anual: float, anos: int) -> float:
     """Calcula o montante final obtido por juros simples."""
@@ -25,17 +29,7 @@ def calcular_juros_compostos(capital: float, taxa_anual: float, anos: int) -> fl
     return montante
 
 
-def calcular_depreciacao_linear(
-    valor_inicial: float, valor_residual: float, vida_util_anos: int
-) -> float:
-    """Calcula o valor de depreciação anual de um ativo corporativo."""
-    if vida_util_anos <= 0:
-        raise ValueError("A vida útil deve ser maior que zero.")
-    return (valor_inicial - valor_residual) / vida_util_anos
-
-
 def main():
-    """Função principal que executa exemplos de cálculos financeiros."""
     print("Iniciando o sistema FinCalc...")
     montante = calcular_juros_simples(1000.0, 5.0, 2)
     print(f"Juros Simples (R$ 1.000 a 5% por 2 anos): R$ {montante:.2f}")
@@ -43,8 +37,18 @@ def main():
     print(f"Juros Compostos: R$ {montante_comp:.2f}")
     patrimonio = calcular_aposentadoria(10000.0, 500.0, 20, 6.0)
     print(f"Patrimônio Estimado para Aposentadoria: R$ {patrimonio:.2f}")
+    
+    # Execução Aluno 5
     depreciacao = calcular_depreciacao_linear(10000.0, 2000.0, 5)
     print(f"Depreciação Anual: R$ {depreciacao:.2f}")
+
+    # Execução Aluno 6
+    taxa_mensal = converter_taxa_anual_para_mensal(12.0)
+    print(f"Taxa Mensal Equivalente: {taxa_mensal:.4f}%")
+
+    # Execução Aluno 7
+    margem = calcular_margem_liquida(50000.0, 35000.0)
+    print(f"Margem Líquida: {margem:.2f}%")
 
 
 if __name__ == "__main__":
