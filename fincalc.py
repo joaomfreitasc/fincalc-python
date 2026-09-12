@@ -35,11 +35,14 @@ if __name__ == "__main__":
     print(f"Patrimônio Estimado para Aposentadoria: R$ {patrimonio:.2f}")
 
 
-def calcular_depreciacao_linear(valor_inicial: float, valor_residual: float, vida_util_anos: int) -> float:
+def calcular_depreciacao_linear(
+    valor_inicial: float, valor_residual: float, vida_util_anos: int
+) -> float:
     """Calcula o valor de depreciação anual de um ativo corporativo."""
     if vida_util_anos <= 0:
         raise ValueError("A vida útil deve ser maior que zero.")
     return (valor_inicial - valor_residual) / vida_util_anos
+
 
 def main():
     print("Iniciando o sistema FinCalc...")
