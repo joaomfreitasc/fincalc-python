@@ -35,19 +35,19 @@ if __name__ == "__main__":
     print(f"Patrimônio Estimado para Aposentadoria: R$ {patrimonio:.2f}")
 
 
-def calcular_depreciacao_linear(
-    valor_inicial: float, valor_residual: float, vida_util_anos: int
-) -> float:
-    """Calcula o valor de depreciação anual de um ativo corporativo."""
-    if vida_util_anos <= 0:
-        raise ValueError("A vida útil deve ser maior que zero.")
-    return (valor_inicial - valor_residual) / vida_util_anos
-
+from src.fincalc5 import calcular_depreciacao_linear
+from src.fincalc6 import converter_taxa_anual_para_mensal
 
 def main():
     print("Iniciando o sistema FinCalc...")
+    
+    # Execução do Aluno 5
     depreciacao = calcular_depreciacao_linear(10000.0, 2000.0, 5)
     print(f"Depreciação Anual: R$ {depreciacao:.2f}")
+
+    # Execução do Aluno 6
+    taxa_mensal = converter_taxa_anual_para_mensal(12.0)
+    print(f"Taxa Mensal Equivalente: {taxa_mensal:.4f}%")
 
 
 if __name__ == "__main__":
