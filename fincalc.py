@@ -1,5 +1,8 @@
 # FinCalc - Sistema de Cálculos Financeiros em Python
 
+from src.fincalc5 import calcular_depreciacao_linear
+from src.fincalc6 import converter_taxa_anual_para_mensal
+from src.fincalc7 import calcular_margem_liquida
 
 def calcular_juros_simples(capital: float, taxa_anual: float, anos: int) -> float:
     """Calcula o montante final obtido por juros simples."""
@@ -48,6 +51,25 @@ def main():
     print("Iniciando o sistema FinCalc...")
     depreciacao = calcular_depreciacao_linear(10000.0, 2000.0, 5)
     print(f"Depreciação Anual: R$ {depreciacao:.2f}")
+
+
+if __name__ == "__main__":
+    main()
+
+def main():
+    print("Iniciando o sistema FinCalc...")
+
+    # Execução Aluno 5
+    depreciacao = calcular_depreciacao_linear(10000.0, 2000.0, 5)
+    print(f"Depreciação Anual: R$ {depreciacao:.2f}")
+
+    # Execução Aluno 6
+    taxa_mensal = converter_taxa_anual_para_mensal(12.0)
+    print(f"Taxa Mensal Equivalente: {taxa_mensal:.4f}%")
+
+    # Execução Aluno 7
+    margem = calcular_margem_liquida(50000.0, 35000.0)
+    print(f"Margem Líquida: {margem:.2f}%")
 
 
 if __name__ == "__main__":
