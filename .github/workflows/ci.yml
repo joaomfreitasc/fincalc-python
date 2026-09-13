@@ -1,4 +1,4 @@
-name: FinCalc CI - Professional Static Analysis
+name: FinCalc CI/CD Pipeline
 
 on:
   push:
@@ -7,8 +7,9 @@ on:
     branches: [ "main" ]
 
 jobs:
+  # JOB 1: INTEGRAÇÃO CONTÍNUA (CI) - Roda nos servidores em nuvem do GitHub
   build-and-lint:
-    name: Build Verification & Linter (Flake8 & Bandit)
+    name: Build Verification & Static Analysis
     runs-on: ubuntu-latest
 
     steps:
@@ -33,3 +34,29 @@ jobs:
 
       - name: Executar Linter de Segurança (Bandit)
         run: bandit -r fincalc.py
+
+  # JOB 2: ENTREGA CONTÍNUA (CD DESAFIO) - Roda no próprio Codespaces do Aluno!
+  deploy-simulado-codespaces:
+    name: CD - Deploy Simulado no Codespaces
+    runs-on: self-hosted
+    needs: build-and-lint
+
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: Simular Implantação no Servidor de Produção do Codespace
+        run: |
+          echo "🚀 Iniciando processo de deploy automático no servidor local..."
+
+          mkdir -p /tmp/servidor_producao_fincalc
+
+          cp fincalc.py /tmp/servidor_producao_fincalc/
+          cp -r src /tmp/servidor_producao_fincalc/ 2>/dev/null || true
+
+          echo "📦 Arquivos da aplicação copiados para /tmp/servidor_producao_fincalc/"
+
+          python3 -m py_compile /tmp/servidor_producao_fincalc/fincalc.py
+
+          echo "✅ DEPLOY CONCLUÍDO COM SUCESSO!"
+          echo "A aplicação FinCalc está 'no ar' e pronta para execução em produção."
