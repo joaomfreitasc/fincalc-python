@@ -1,8 +1,13 @@
+cat > fincalc.py <<'EOF'
 # FinCalc - Sistema de Cálculos Financeiros em Python
 
 
 def calcular_juros_simples(capital: float, taxa_anual: float, anos: int) -> float:
     """Calcula o montante final obtido por juros simples."""
+    if capital < 0:
+        raise ValueError("O capital não pode ser negativo.")
+    if anos < 0:
+        raise ValueError("O tempo não pode ser negativo.")
     juros = capital * (taxa_anual / 100) * anos
     return capital + juros
 
@@ -11,6 +16,12 @@ def calcular_aposentadoria(
     patrimonio_atual: float, aporte_mensal: float, anos: int, taxa_anual: float
 ) -> float:
     """Calcula o patrimônio acumulado para aposentadoria."""
+    if patrimonio_atual < 0:
+        raise ValueError("O patrimônio atual não pode ser negativo.")
+    if aporte_mensal < 0:
+        raise ValueError("O aporte mensal não pode ser negativo.")
+    if anos < 0:
+        raise ValueError("O tempo não pode ser negativo.")
     meses = anos * 12
     taxa_mensal = (taxa_anual / 100) / 12
     saldo = patrimonio_atual
@@ -23,11 +34,8 @@ def calcular_juros_compostos(capital: float, taxa_anual: float, anos: int) -> fl
     """Calcula o montante final obtido por juros compostos."""
     if capital < 0:
         raise ValueError("O capital não pode ser negativo.")
-    if taxa_anual < 0:
-        raise ValueError("A taxa anual não pode ser negativa.")
     if anos < 0:
-        raise ValueError("O tempo (anos) não pode ser negativo.")
-
+        raise ValueError("O tempo não pode ser negativo.")
     montante = capital * ((1 + (taxa_anual / 100)) ** anos)
     return montante
 
@@ -38,11 +46,15 @@ def calcular_depreciacao_linear(
     """Calcula o valor de depreciação anual de um ativo corporativo."""
     if vida_util_anos <= 0:
         raise ValueError("A vida útil deve ser maior que zero.")
+    if valor_residual > valor_inicial:
+        raise ValueError("O valor residual não pode ser maior que o inicial.")
     return (valor_inicial - valor_residual) / vida_util_anos
 
 
 def calcular_irrf(salario_bruto: float) -> float:
     """Calcula a alíquota simplificada de Imposto de Renda Retido na Fonte."""
+    if salario_bruto < 0:
+        raise ValueError("O salário bruto não pode ser negativo.")
     if salario_bruto <= 2259.20:
         return 0.0
     elif salario_bruto <= 2826.65:
@@ -57,6 +69,14 @@ def calcular_parcela_price(
     valor_emprestimo: float, taxa_mensal: float, meses: int
 ) -> float:
     """Calcula o valor da parcela fixa em um financiamento pela Tabela Price."""
+    if valor_emprestimo <= 0:
+        raise ValueError("O valor do empréstimo deve ser maior que zero.")
+    if taxa_mensal < 0:
+        raise ValueError("A taxa mensal não pode ser negativa.")
+    if meses <= 0:
+        raise ValueError("O número de meses deve ser maior que zero.")
+    if taxa_mensal == 0:
+        return valor_emprestimo / meses
     i = taxa_mensal / 100
     parcela = valor_emprestimo * (i * ((1 + i) ** meses)) / (((1 + i) ** meses) - 1)
     return parcela
@@ -66,6 +86,12 @@ def calcular_valor_futuro(
     aporte_mensal: float, taxa_mensal: float, meses: int
 ) -> float:
     """Calcula o valor futuro acumulado com aportes mensais recorrentes."""
+    if aporte_mensal < 0:
+        raise ValueError("O aporte mensal não pode ser negativo.")
+    if meses < 0:
+        raise ValueError("O número de meses não pode ser negativo.")
+    if taxa_mensal == 0:
+        return aporte_mensal * meses
     i = taxa_mensal / 100
     vf = aporte_mensal * (((1 + i) ** meses - 1) / i)
     return vf
@@ -73,6 +99,8 @@ def calcular_valor_futuro(
 
 def converter_taxa_anual_para_mensal(taxa_anual: float) -> float:
     """Converte uma taxa de juros anual equivalente para taxa mensal."""
+    if taxa_anual <= -100:
+        raise ValueError("A taxa anual deve ser maior que -100%.")
     return (((1 + (taxa_anual / 100)) ** (1 / 12)) - 1) * 100
 
 
@@ -80,12 +108,16 @@ def calcular_margem_liquida(receita_total: float, custos_totais: float) -> float
     """Calcula a margem de Lucro Líquida percentual de uma operação."""
     if receita_total <= 0:
         raise ValueError("A receita total deve ser maior que zero.")
+    if custos_totais < 0:
+        raise ValueError("Os custos totais não podem ser negativos.")
     lucro = receita_total - custos_totais
     return (lucro / receita_total) * 100
 
 
 def calcular_rendimento_real(ganho_nominal: float, inflacao: float) -> float:
     """Calcula o rendimento real ajustado pela inflação (Equação de Fisher)."""
+    if inflacao <= -100:
+        raise ValueError("A inflação deve ser maior que -100%.")
     r_real = (((1 + (ganho_nominal / 100)) / (1 + (inflacao / 100))) - 1) * 100
     return r_real
 
@@ -105,3 +137,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+EOF
