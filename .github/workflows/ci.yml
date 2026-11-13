@@ -1,4 +1,4 @@
-name: FinCalc CI - Quality & Unit Testing Pipeline
+name: FinCalc CI/CD Pipeline
 
 on:
   push:
@@ -44,3 +44,20 @@ jobs:
       with:
         name: coverage-report-html
         path: coverage_report/
+
+  deploy-simulado-codespaces:
+    name: CD - Deploy Simulado no Codespaces
+    runs-on: self-hosted
+    needs: build-lint-test
+
+    steps:
+    - name: Checkout do Código
+      uses: actions/checkout@v4
+
+    - name: Simular Implantação no Servidor de Produção
+      run: |
+        echo "Iniciando deploy automático no servidor local..."
+        mkdir -p /tmp/servidor_producao_fincalc
+        cp fincalc.py /tmp/servidor_producao_fincalc/
+        python3 -m py_compile /tmp/servidor_producao_fincalc/fincalc.py
+        echo "DEPLOY CONCLUÍDO COM SUCESSO!"
